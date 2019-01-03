@@ -43,25 +43,73 @@ class _MyHomePageState extends State<MyHomePage> {
     // This method is rerun every time setState is called,
     return Scaffold(
       appBar: AppBar(
-        // Here we take the value from the MyHomePage object that was created by
-        // the App.build method, and use it to set our appbar title.
-        title: Text(widget.title),
+        title:  Text(widget.title),
+        centerTitle: true,
       ),
-      body: Center(
-        child: Column(
-          mainAxisAlignment: MainAxisAlignment.center,
-          children: <Widget>[
-            Text(
-              'Custom clipper is coming soon',
-            ),
-          ],
-        ),
-      ),
+      body: ClipPath(clipper: DiagonalClipperFirst(),
+          child: Image.network(
+              "https://images.pexels.com/photos/67636/rose-blue-flower-rose-blooms-67636.jpeg?auto=compress&cs=tinysrgb&dpr=1&w=500")),
       floatingActionButton: FloatingActionButton(
         onPressed: null,
         tooltip: 'Floating Action Button',
-        child: Icon(Icons.add),
+        child: Icon(Icons.swap_vert),
       ), // This trailing comma makes auto-formatting nicer for build methods.
     );
   }
 }
+
+///Custom clipper implementation to implement diagonal clipping from bottom to top.
+class DiagonalClipperFirst extends CustomClipper<Path>{
+  @override
+  Path getClip(Size size) {
+    final path = Path();
+    path.lineTo(0.0, size.height);
+    path.lineTo(size.width, 0.0);
+    path.close();
+    return path;
+  }
+
+  @override
+  bool shouldReclip(CustomClipper<Path> oldClipper) {
+    return true;
+  }
+}
+
+///Custom clipper implementation to implement diagonal clipping from top to bottom.
+class DiagonalClipperSecond extends CustomClipper<Path>{
+  @override
+  Path getClip(Size size) {
+    final path = Path();
+    path.lineTo(0.0, 0.0);
+    path.lineTo(size.width, size.height);
+    path.lineTo(size.width, 0.0);
+    path.close();
+    return path;
+  }
+
+  @override
+  bool shouldReclip(CustomClipper<Path> oldClipper) {
+    return true;
+  }
+}
+
+class MyCustomClipper extends CustomClipper<Path>{
+  @override
+  Path getClip(Size size) {
+    final path = Path();
+    path.lineTo(0.0, 0.0);
+    path.lineTo(size.width, size.height-80);
+    path.lineTo(size.width, 0.0);
+    path.close();
+    return path;
+  }
+
+  @override
+  bool shouldReclip(CustomClipper<Path> oldClipper) {
+    return true;
+  }
+}
+
+
+
+
