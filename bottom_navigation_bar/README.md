@@ -1,4 +1,4 @@
-# bottom_navigation_bar
+# BottomNavigationBar
 
 A Flutter application which shows implementation of BottomNavigationBar.
 
